@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SportZie| Task 01 | Khushi | Prodigy Infotech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --green:    #1A6B3C;
+      --green2:   #228B4E;
+      --yellow:   #F5C518;
+      --ink:      #111211;
+      --iron:     #3A3D3A;
+      --mid:      #6B6E6B;
+      --fog:      #E8EAE8;
+      --bg:       #F4F6F4;
+      --white:    #FFFFFF;
+      --nav-h:    72px;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    
+ 
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.25rem, 5vw, 3.5rem);
+      background: transparent;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    #nav.scrolled {
+      background: var(--ink);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .logo em { font-style: normal; color: var(--yellow); }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      gap: clamp(1.2rem, 2.5vw, 2.2rem);
+    }
+
+    .nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255,255,255,0.82);
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.25s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--yellow);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--yellow); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { width: 100%; }
+    .nav-links a.active { color: var(--yellow); }
+
+    .nav-btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--yellow);
+      padding: 0.55rem 1.5rem;
+      border: 2px solid var(--yellow);
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .nav-btn:hover { background: transparent; color: var(--yellow); }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .burger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 1px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: var(--ink);
+      z-index: 999;
+      border-top: 2px solid var(--yellow);
+      flex-direction: column;
+      padding: 1.5rem clamp(1.25rem, 5vw, 3.5rem) 2rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.2s, padding-left 0.25s;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--yellow); padding-left: 0.5rem; }
+
+    @media (max-width: 740px) {
+      .nav-links, .nav-btn { display: none; }
+      .burger { display: flex; }
+    }
+
+    
+    .sec {
+      padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 4rem);
+    }
+
+    .eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green2);
+      margin-bottom: 0.5rem;
+    }
+
+    .sec-h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .sec-lead {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--mid);
+      max-width: 520px;
+    }
+
+   
+    #home {
+      min-height: 100svh;
+      background: linear-gradient(160deg,
+        rgba(17,18,17,0.93) 0%,
+        rgba(26,107,60,0.80) 55%,
+        rgba(17,18,17,0.96) 100%);
+      display: flex;
+      align-items: center;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,197,24,0.10) 0%, transparent 65%);
+      top: 50%; left: 60%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      padding: 4rem clamp(1.25rem, 6vw, 4rem) 5rem;
+      max-width: 780px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-h1 .accent { color: var(--yellow); display: block; }
+
+    .hero-p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.62);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-yellow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--yellow);
+      border: 2px solid var(--yellow);
+      padding: 0.85rem 2.2rem;
+      display: inline-block;
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+    }
+
+    .btn-yellow:hover {
+      background: transparent;
+      color: var(--yellow);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost-white {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.22);
+      padding: 0.85rem 2.2rem;
+      display: inline-block;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .btn-ghost-white:hover {
+      border-color: rgba(255,255,255,0.65);
+      color: var(--white);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+
+    .hstat-n {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--yellow);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .hstat-l {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+  
+    #sports {
+      background: var(--fog);
+      padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 4rem);
+    }
+
+    .sports-intro { margin-bottom: 3rem; }
+
+    .sports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .sport-card {
+      background: var(--white);
+      border: 2px solid transparent;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .sport-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(26,107,60,0.13);
+    }
+
+    .sport-icon {
+      font-size: 2.8rem;
+      display: block;
+      margin-bottom: 0.9rem;
+    }
+
+    .sport-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .sport-count {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--mid);
+    }
+
+   
+    #about {
+      background: var(--white);
+      padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 4rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 5rem);
+      align-items: center;
+    }
+
+    .about-visual {
+      aspect-ratio: 4/5;
+      background: linear-gradient(145deg, var(--green) 0%, var(--ink) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-bg-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(5rem, 14vw, 11rem);
+      font-weight: 700;
+      color: rgba(255,255,255,0.06);
+      text-transform: uppercase;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+    }
+
+    .about-text .eyebrow { color: var(--green2); }
+
+    .about-list {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .about-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .about-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .about-item-text {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .astat {
+      background: var(--bg);
+      border: 1px solid var(--fog);
+      padding: 1.25rem;
+    }
+
+    .astat-n {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .astat-l {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    @media (max-width: 740px) {
+      #about { grid-template-columns: 1fr; }
+      .about-visual { aspect-ratio: 16/9; }
+    }
+
+    
+    #programmes {
+      background: var(--ink);
+      padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 4rem);
+    }
+
+    #programmes .eyebrow { color: var(--yellow); }
+    #programmes .sec-h2  { color: var(--white); }
+    #programmes .sec-lead { color: rgba(255,255,255,0.45); }
+
+    .prog-intro { margin-bottom: 3rem; }
+
+    .prog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .prog-card {
+      background: var(--ink);
+      padding: 2.5rem 2rem;
+      border-top: 3px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .prog-card:hover {
+      border-color: var(--yellow);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .prog-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .prog-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .prog-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.42);
+    }
+
+   
+    #coaches {
+      background: var(--bg);
+      padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 4rem);
+    }
+
+    .coaches-intro { margin-bottom: 3rem; }
+
+    .coaches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .coach-card {
+      background: var(--white);
+      overflow: hidden;
+      border: 1px solid var(--fog);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .coach-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.09);
+    }
+
+    .coach-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .c1 { background: linear-gradient(135deg, #1A6B3C22, #1A6B3C44); }
+    .c2 { background: linear-gradient(135deg, #F5C51822, #F5C51844); }
+    .c3 { background: linear-gradient(135deg, #11121122, #11121144); }
+    .c4 { background: linear-gradient(135deg, #228B4E22, #228B4E44); }
+
+    .coach-info {
+      padding: 1.25rem;
+    }
+
+    .coach-sport {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green2);
+      margin-bottom: 0.3rem;
+    }
+
+    .coach-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+    }
+
+    .coach-exp {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--mid);
+    }
+
+    #testimonials {
+      background: var(--green);
+      padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 6vw, 4rem);
+    }
+
+    #testimonials .eyebrow { color: rgba(255,255,255,0.5); }
+    #testimonials .sec-h2  { color: var(--white); }
+
+    .testi-intro { margin-bottom: 3rem; }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testi-card {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 2rem;
+      transition: background 0.3s;
+    }
+
+    .testi-card:hover { background: rgba(255,255,255,0.16); }
+
+    .testi-stars {
+      font-size: 0.9rem;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .testi-text {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testi-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .testi-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+
+    .testi-role {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-top: 1px;
+    }
+
+    
+    #cta {
+      background: var(--yellow);
+      padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 6vw, 4rem);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) { #cta { grid-template-columns: 1fr; } }
+
+    .cta-h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.0;
+    }
+
+    .cta-h2 span { color: var(--green); }
+
+    .cta-sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(17,18,17,0.65);
+      margin-top: 0.6rem;
+      line-height: 1.6;
+    }
+
+    .btn-dark {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--yellow);
+      background: var(--ink);
+      border: 2px solid var(--ink);
+      padding: 1rem 2.4rem;
+      white-space: nowrap;
+      display: inline-block;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn-dark:hover {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--white);
+    }
+
+    
+    footer {
+      background: var(--ink);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 6vw, 4rem);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    @media (max-width: 780px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+
+    .footer-brand .logo { display: inline-block; margin-bottom: 1rem; font-size: 1.4rem; }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.35);
+      max-width: 220px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .footer-col ul a {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: var(--yellow); }
+
+    .footer-credit {
+      padding: 1.5rem clamp(1.25rem, 6vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-credit p {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+
+    .footer-credit .highlight { color: var(--yellow); font-weight: 600; }
+    .footer-credit .white     { color: rgba(255,255,255,0.5); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+ 
+  <nav id="nav">
+    <a href="#home" class="logo">Sport<em>Zie</em></a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home"         class="active">Home</a></li>
+      <li><a href="#sports"               >Sports</a></li>
+      <li><a href="#about"                >About</a></li>
+      <li><a href="#programmes"           >Programmes</a></li>
+      <li><a href="#coaches"              >Coaches</a></li>
+      <li><a href="#cta"                  >Join</a></li>
+    </ul>
+
+    <a href="#cta" class="nav-btn">Join Now</a>
+
+    <button class="burger" id="burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#sports">Sports</a>
+    <a href="#about">About</a>
+    <a href="#programmes">Programmes</a>
+    <a href="#coaches">Coaches</a>
+    <a href="#cta">Join Now</a>
+  </div>
+
+
+ 
+  <section id="home">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <p class="hero-tag">SportZie Season 2026</p>
+      <h1 class="hero-h1">
+        Train hard.<br>
+        <span class="accent">Play harder.</span>
+      </h1>
+      <p class="hero-p">
+        Your complete destination for sports training, equipment, and community.
+        Whether you run, lift, kick, or swim  SportZie is built for you.
+      </p>
+      <div class="hero-btns">
+        <a href="#sports" class="btn-yellow">Explore Sports</a>
+        <a href="#programmes" class="btn-ghost-white">View Programmes</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hstat-n">12+</div>
+          <div class="hstat-l">Sports covered</div>
+        </div>
+        <div>
+          <div class="hstat-n">5,000+</div>
+          <div class="hstat-l">Active members</div>
+        </div>
+        <div>
+          <div class="hstat-n">200+</div>
+          <div class="hstat-l">Certified coaches</div>
+        </div>
+        <div>
+          <div class="hstat-n">8</div>
+          <div class="hstat-l">Cities</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SPORTS CATEGORIES -->
+  <section id="sports">
+    <div class="sports-intro">
+      <p class="eyebrow">Disciplines</p>
+      <h2 class="sec-h2">Choose your sport</h2>
+      <p class="sec-lead">From team games to solo endurance — find your discipline and start training today.</p>
+    </div>
+
+    <div class="sports-grid">
+      <div class="sport-card">
+        <span class="sport-icon">⚽</span>
+        <div class="sport-name">Football</div>
+        <div class="sport-count">86 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🏃</span>
+        <div class="sport-name">Running</div>
+        <div class="sport-count">120 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🏊</span>
+        <div class="sport-name">Swimming</div>
+        <div class="sport-count">60 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🎾</span>
+        <div class="sport-name">Tennis</div>
+        <div class="sport-count">48 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🏋️</span>
+        <div class="sport-name">Strength</div>
+        <div class="sport-count">Unlimited access</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🚴</span>
+        <div class="sport-name">Cycling</div>
+        <div class="sport-count">40 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🥊</span>
+        <div class="sport-name">Boxing</div>
+        <div class="sport-count">32 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🏸</span>
+        <div class="sport-name">Badminton</div>
+        <div class="sport-count">36 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🏀</span>
+        <div class="sport-name">Basketball</div>
+        <div class="sport-count">44 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🏏</span>
+        <div class="sport-name">Cricket</div>
+        <div class="sport-count">28 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🤸</span>
+        <div class="sport-name">Gymnastics</div>
+        <div class="sport-count">24 sessions / month</div>
+      </div>
+      <div class="sport-card">
+        <span class="sport-icon">🥋</span>
+        <div class="sport-name">Martial Arts</div>
+        <div class="sport-count">30 sessions / month</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- MADE BY - KHUSHI -->
+  <section id="about">
+    <div class="about-visual">
+      <span class="about-bg-text">SPORT</span>
+      <div class="about-badge">Est. 2018</div>
+    </div>
+
+    <div class="about-text">
+      <p class="eyebrow">Who we are</p>
+      <h2 class="sec-h2">Built by athletes,<br>for athletes.</h2>
+      <p class="sec-lead">SportZie started with a simple belief every person deserves access to world class coaching, community, and facilities regardless of their level.</p>
+
+      <ul class="about-list">
+        <li class="about-item">
+          <div class="about-dot"></div>
+          <span class="about-item-text">200+ certified coaches across 12 disciplines, available online and in person.</span>
+        </li>
+        <li class="about-item">
+          <div class="about-dot"></div>
+          <span class="about-item-text">State of the art facilities in 8 cities with equipment maintained to professional standards.</span>
+        </li>
+        <li class="about-item">
+          <div class="about-dot"></div>
+          <span class="about-item-text">Personalised training plans that adapt to your schedule, goals, and fitness level.</span>
+        </li>
+        <li class="about-item">
+          <div class="about-dot"></div>
+          <span class="about-item-text">A community of 5,000+ active members who keep each other motivated every day.</span>
+        </li>
+      </ul>
+
+      <div class="about-stats">
+        <div class="astat">
+          <div class="astat-n">7+</div>
+          <div class="astat-l">Years active</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">150+</div>
+          <div class="astat-l">Projects shipped</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">40+</div>
+          <div class="astat-l">Awards won</div>
+        </div>
+        <div class="astat">
+          <div class="astat-n">96%</div>
+          <div class="astat-l">Satisfaction rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="programmes">
+    <div class="prog-intro">
+      <p class="eyebrow">What we offer</p>
+      <h2 class="sec-h2">Our programmes</h2>
+      <p class="sec-lead">Structured training paths for every goal from first-timer to competition ready.</p>
+    </div>
+
+    <div class="prog-grid">
+      <div class="prog-card">
+        <span class="prog-icon">🎯</span>
+        <div class="prog-name">Beginner Track</div>
+        <p class="prog-desc">Foundation skills, basic fitness, sport introduction. Perfect for those starting their athletic journey from zero.</p>
+      </div>
+      <div class="prog-card">
+        <span class="prog-icon">⚡</span>
+        <div class="prog-name">Performance Boost</div>
+        <p class="prog-desc">Intermediate athletes ready to level up. Focused drills, sport specific conditioning, and weekly benchmarks.</p>
+      </div>
+      <div class="prog-card">
+        <span class="prog-icon">🏆</span>
+        <div class="prog-name">Elite Training</div>
+        <p class="prog-desc">Competition-grade preparation. One on one coaching, video analysis, and periodised programming for serious athletes.</p>
+      </div>
+      <div class="prog-card">
+        <span class="prog-icon">🧘</span>
+        <div class="prog-name">Recovery & Wellness</div>
+        <p class="prog-desc">Mobility, injury prevention, and mental conditioning. The side of training most athletes ignore until it matters.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="coaches" class="sec">
+    <div class="coaches-intro">
+      <p class="eyebrow">Meet the team</p>
+      <h2 class="sec-h2">Our coaches</h2>
+      <p class="sec-lead">Every coach at SportZie  is certified, experienced, and genuinely passionate about helping you improve.</p>
+    </div>
+
+    <div class="coaches-grid">
+      <div class="coach-card">
+        <div class="coach-thumb c1">🏃</div>
+        <div class="coach-info">
+          <div class="coach-sport">Running</div>
+          <div class="coach-name">Arjun Mehta</div>
+          <div class="coach-exp">Former national athlete · 12 yrs coaching</div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-thumb c2">⚽</div>
+        <div class="coach-info">
+          <div class="coach-sport">Football</div>
+          <div class="coach-name">Priya Sharma</div>
+          <div class="coach-exp">UEFA B License · 9 yrs coaching</div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-thumb c3">🏊</div>
+        <div class="coach-info">
+          <div class="coach-sport">Swimming</div>
+          <div class="coach-name">Rohan Das</div>
+          <div class="coach-exp">State champion · 8 yrs coaching</div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-thumb c4">🏋️</div>
+        <div class="coach-info">
+          <div class="coach-sport">Strength & Fitness</div>
+          <div class="coach-name">Neha Kapoor</div>
+          <div class="coach-exp">NSCA certified · 10 yrs coaching</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <div class="testi-intro">
+      <p class="eyebrow">What members say</p>
+      <h2 class="sec-h2" style="color:var(--white);">Real results.<br>Real people.</h2>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"SportZie completely changed how I train. The coaches are professional, the facilities are top notch, and the community keeps me coming back every single day."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">👨</div>
+          <div>
+            <div class="testi-name">Rahul Verma</div>
+            <div class="testi-role">Football · Member since 2022</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"I started as a complete beginner. Within 6 months of the Beginner Track I ran my first 10K. The personalised plan made all the difference."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">👩</div>
+          <div>
+            <div class="testi-name">Ananya Singh</div>
+            <div class="testi-role">Running · Member since 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The Elite Training programme helped me qualify for the state swimming championship. I couldn't have done it without Coach Rohan's guidance."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">🧑</div>
+          <div>
+            <div class="testi-name">Karan Patel</div>
+            <div class="testi-role">Swimming · Member since 2021</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="cta">
+    <div>
+      <h2 class="cta-h2">Ready to<br><span>start playing?</span></h2>
+      <p class="cta-sub">Join 5,000+ athletes already training with SportZie .<br>First session is free no commitment required.</p>
+    </div>
+    <a href="mailto:hello@sportzie.in" class="btn-dark">Join SportZie →</a>
+  </div>
+
+
+ 
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="logo">Sport<em>Zie</em></a>
+        <p class="footer-tagline">Your complete sports training platform. Coaching, community, and world class facilities all under one roof.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#sports">Sports</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programmes">Programmes</a></li>
+          <li><a href="#coaches">Coaches</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Sports</h4>
+        <ul>
+          <li><a href="#sports">Football</a></li>
+          <li><a href="#sports">Running</a></li>
+          <li><a href="#sports">Swimming</a></li>
+          <li><a href="#sports">Tennis</a></li>
+          <li><a href="#sports">Boxing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@sportzie.in">hello@sportzie.in</a></li>
+          <li><a href="#">+91 9999999900</a></li>
+          <li><a href="#">sportzie.in</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-credit">
+      <p>&copy; 2026 SportZie . All rights reserved.</p>
+      <p>
+        Task 01 |Responsive Landing Page &nbsp;|&nbsp;
+        Submitted by <span class="highlight">Khushi</span> &nbsp;|&nbsp;
+        <span class="white">Prodigy Infotech</span>
+      </p>
+    </div>
+  </footer>
+
+
+  
+  <script>
+    const nav = document.getElementById('nav');
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id], div[id]');
+
+    /* 1. Nav scroll */
+    function handleScroll() {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      updateActive();
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    /* 2. Active link */
+    function updateActive() {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 90) current = sec.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    }
+
+    /* 3. Hamburger */
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open', open);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
