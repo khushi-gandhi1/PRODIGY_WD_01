@@ -59,7 +59,7 @@ SportZie-Landing-Page/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/SportZie-Landing-Page.git
+git clone https://github.com/khushi-gandhi1/SportZie-Landing-Page.git
 ```
 
 ### 2. Navigate to the project folder
@@ -76,22 +76,10 @@ Open the `index.html` file in your browser.
 
 ## 🌐 Live Demo
 
-The project can be hosted using **GitHub Pages**.
+The project is hosted using **GitHub Pages**.
 
 Live Website:  
-`https://your-username.github.io/SportZie-Landing-Page/`
-
----
-
-## 📸 Preview
-
-Add screenshots of your landing page here after uploading them to your repository.
-
-Example:
-
-```
-/assets/preview.png
-```
+`https://khushi-gandhi1.github.io/PRODIGY_WD_01/`
 
 ---
 
@@ -116,7 +104,7 @@ Example:
 
 ## 👤 Author
 
-**Your Name**
+**Khushi**
 
 B.Tech CSE Student  
 Web Development Intern at Prodigy Infotech
